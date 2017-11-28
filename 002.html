@@ -1,0 +1,19 @@
+<html>
+<head>
+  <script src="../AngularLearnings/angular.js"></script>
+  <script type="text/javascript">
+  var app= angular.module("sample",[]);
+  app.controller("emp",function($scope){
+    $scope.name= "Angular";
+    $scope.salary= 4000;
+
+  })
+  </script>
+</head>
+<body ng-app="sample">
+<div ng-controller="emp">
+  Hello {{name}}!
+You draw {{salary}}.
+</div>
+</body>
+</html>
