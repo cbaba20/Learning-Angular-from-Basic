@@ -1,0 +1,30 @@
+<html>
+<head>
+  <script src="../AngularLearnings/angular.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  var app= angular.module("sample",[]);
+  app.controller("emp",["$scope",function(c){
+    c.name= "Chandan";
+    c.salary= 40000;
+    c.getAnnualSal= function(){
+      return (this.salary)*12
+    }
+  }]);
+
+  app.controller("customereinfo",["$scope",function($scope){
+    $scope.Name= "Joe";
+    $scope.City="Mumbai";
+  }])
+  </script>
+</head>
+<body ng-app="sample">
+<div ng-controller="emp">
+  Hello {{name}}!
+  Salary {{salary}}
+  Annual Salary {{getAnnualSal()}}
+</div>
+<div ng-controller="customereinfo">
+  Hello {{Name}}, You are living in {{City}} !
+</div>
+</body>
+</html>
