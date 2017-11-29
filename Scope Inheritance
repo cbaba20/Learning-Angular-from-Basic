@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+
+  <body ng-app="sample">
+    <div ng-controller="emp">  //this is parent controller
+      <h1>Hello {{Name}}</h1>
+
+     Your Current Salary is {{Salary}}
+     
+     <div ng-controller="empdetails">  //this is child controller 
+      
+      //1st level scope inheriatance applied <br>
+      Your <strong>Mobile</strong> is {{Mobile}}<br/>
+      You Resides at <strong>{{Address}}</strong>
+    
+        <div ng-controller="empPayCheck"> //this is 2nd level child controller 
+          //inheriting all properties from its parents <br>
+          Taxes: {{getTaxes()}}
+          <br/>
+          Net Payment : {{netPay()}}
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>
+********script.js*********:
+// Code goes here
+
+//create module first and assign it to controller
+
+var app= angular.module("sample",[]);
+
+//create a controller using above module
+
+app.controller("emp",["$scope",function($scope){
+  $scope.Name="Joy";
+  $scope.Salary="4000";
+}]);
+
+//here app- module "sample" assigned to a variable
+//     emp- controller name for the view
+
+//another way to bind controller 
+app.controller("empdetails",function($scope){
+    //$scope.Name="Lobo"
+    $scope.Mobile="9029115939";
+    $scope.Address="Airoli";
+});
+
+//third controller
+app.controller("empPayCheck",["$scope",function($scope){
+  
+  $scope.getTaxes= function(){
+    return $scope.Salary*30/100;
+  } ;
+  
+  $scope.netPay= function(){
+    return $scope.Salary-$scope.getTaxes();
+  };
+}]);
