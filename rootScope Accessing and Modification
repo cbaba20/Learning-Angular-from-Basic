@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+ <script src="../AngularLearnings/angular.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="../AngularLearnings/script.js"></script>
+  </head>
+<!-- this is parent controller*/ -->
+  <body ng-app="sample">
+    <div ng-controller="emp">
+      <h1>Hello {{Name}}</h1>
+
+     Your Current Salary is {{Salary}}
+<!-- this is child controller -->
+     <div ng-controller="empdetails">
+
+
+      <!-- 1st level scope inheriatance applied <br> -->
+      Your <strong>Mobile</strong> is {{Mobile}}<br/>
+      You Resides at <strong>{{Address}}</strong>
+<!-- this is 2nd level child controller -->
+        <div ng-controller="empPayCheck">
+          <!-- inheriting all properties from its parents <br> -->
+          Taxes: {{getTaxes()}}
+          <br/>
+          Net Payment : {{netPay()}}
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>
+***************script.js file goes from here*************************
+
+// Code goes here
+
+//create module first and assign it to controller
+
+var app= angular.module("sample",[]);
+
+//don't use rootScope to sharing of data
+// var app= angular.module("sample",[]).run(["$rootScope",function($rootScope){
+//   $rootScope.TaxPercent=20;
+// }]);
+
+
+//create a controller using above module
+
+// app.controller("emp",["$scope",function($scope){
+//   $scope.Name="Joy";
+//   $scope.Salary="4000";
+// }]);
+//we can add rootScope to controllers too, not limited to module only
+
+app.controller("emp",["$scope","$rootScope",function($scope,$rootScope){
+  $scope.Name="Joy";
+  $scope.Salary="4000";
+  $rootScope.TaxPercent=20;
+}]);
+
+//here app- module "sample" assigned to a variable
+//     emp- controller name for the view
+
+//another way to bind controller
+app.controller("empdetails",function($scope){
+    //$scope.Name="Lobo"
+    $scope.Mobile="********";
+    $scope.Address="Airoli";
+});
+
+//third controller
+// app.controller("empPayCheck",["$scope",function($scope){
+//
+//   $scope.getTaxes= function(){
+//     return $scope.Salary*30/100;
+//   } ;
+//
+//   $scope.netPay= function(){
+//     return $scope.Salary-$scope.getTaxes();
+//   };
+// }]);
+
+app.controller("empPayCheck",["$scope","$rootScope",function($scope,$rootScope){
+
+  $scope.getTaxes= function(){
+    return $scope.Salary*$rootScope.TaxPercent/100;
+  } ;
+
+  $scope.netPay= function(){
+    return $scope.Salary-$scope.getTaxes();
+  };
+}]);
