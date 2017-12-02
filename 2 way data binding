@@ -1,0 +1,36 @@
+<html>
+
+<head>
+  <title></title>
+  <script src="../AngularLearnings/angular.js" type="text/javascript">
+  </script>
+  <script src="../AngularLearnings/db03.js"></script>
+</head>
+
+<body ng-app="app">
+  <div ng-controller="emp">
+    <!-- two way binding through evaluation expression {{a}} & {{b}} -->
+    <div>
+      value of a is {{a}} but it can be changed <input type="text" ng-model="a" /><br />
+      value of {{b}} but it can be changed <input type="text" ng-model="b" /><br />
+    </div>
+    Sum= {{sum}} <br>
+    <button ng-click="doSum()">Calculate</button>
+
+  </div>
+</body>
+
+</html>
+
+***********************d03.js file goes here***************************
+
+var app = angular.module("app", []);
+
+app.controller("emp", ["$scope", function($scope) {
+  $scope.a = 20;
+  $scope.b = 10;
+
+  $scope.doSum = function() {
+    $scope.sum = parseInt($scope.a) + parseInt($scope.b);
+  }
+}]);
